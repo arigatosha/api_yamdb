@@ -3,9 +3,9 @@ from django.db import models
 
 
 class User(AbstractUser):
-    ADMIN = "admin"
-    MODERATOR = "moderator"
-    USER = "user"
+    ADMIN = 'admin'
+    MODERATOR = 'moderator'
+    USER = 'user'
 
     ROLE_CHOICES = (
         (ADMIN, 'admin'),
@@ -14,7 +14,7 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(verbose_name='email', unique=True)
-    role = models.CharField("Роли пользователей", default=USER, choices=ROLE_CHOICES)
+    role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES)
     bio = models.TextField('Биография', blank=True, )
     token = models.CharField(
         blank=True,
