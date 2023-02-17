@@ -14,7 +14,7 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(verbose_name='email', unique=True)
-    role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES)
+    role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES, max_length=50)
     bio = models.TextField('Биография', blank=True, )
     token = models.CharField(
         blank=True,
@@ -43,4 +43,3 @@ class User(AbstractUser):
     @property
     def is_user(self):
         return self.role == self.USER
-
