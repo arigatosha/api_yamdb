@@ -1,4 +1,3 @@
-from datetime import timedelta
 from pathlib import Path
 
 
@@ -24,7 +23,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
-    'rest_framework_simplejwt',
     'api',
     'users',
     'reviews',
@@ -59,8 +57,8 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'api_yamdb.wsgi.application'
+
 
 # Database
 
