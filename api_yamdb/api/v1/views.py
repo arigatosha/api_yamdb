@@ -31,7 +31,6 @@ from . serializers import (
     CategorySerializer, GenreSerializer, TitleSerializer,
     ReviewSerializer, CommentSerializer, OnlyReadTitleSerializer)
 
-
 class CategoryViewSet(CreateListDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer

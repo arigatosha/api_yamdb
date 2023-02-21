@@ -10,7 +10,6 @@ from .views import (
     ReviewViewSet, TitleViewSet,
 )
 
-
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
 router.register(r'genres', GenreViewSet)
@@ -31,4 +30,3 @@ router.register(
     CommentViewSet,
     basename='comments'
 )
-

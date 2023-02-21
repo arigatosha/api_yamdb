@@ -1,9 +1,8 @@
 import re
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-User = get_user_model()
 
-from users.models import User
+from users.models import Use
 
 from rest_framework import serializers
 
@@ -12,7 +11,6 @@ from reviews.models import Category, Comment, Genre, Review, Title
 User = get_user_model()
 
 class CategorySerializer(serializers.ModelSerializer):
-
 
     class Meta:
         model = Category
@@ -51,7 +49,6 @@ class OnlyReadTitleSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
         )
-
 
 
 class MyTokenObtainPairSerializer(serializers.ModelSerializer):
