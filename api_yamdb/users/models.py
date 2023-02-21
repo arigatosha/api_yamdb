@@ -12,7 +12,6 @@ class User(AbstractUser):
         (MODERATOR, 'moderator'),
         (USER, 'user'))
 
-
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(verbose_name='email',unique=True, max_length=254)
     role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES, max_length=40)

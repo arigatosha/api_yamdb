@@ -30,7 +30,3 @@ router.register(
     CommentViewSet,
     basename='comments'
 )
-
-urlpatterns = [
-    path('', include(router.urls)),
-    ]

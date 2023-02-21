@@ -1,18 +1,14 @@
 import re
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-User = get_user_model()
 
-from reviews.models import Category, Genre, Title, User
-
-
-class CategorySerializer(serializers.ModelSerializer):
+from users.models import Use
 
 from rest_framework import serializers
 
 from reviews.models import Category, Comment, Genre, Review, Title
-from users.models import User
+
+User = get_user_model()
 
 class CategorySerializer(serializers.ModelSerializer):
 
@@ -22,7 +18,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class GenreSerializer(serializers.ModelSerializer):
-
 
     class Meta:
         model = Genre
@@ -105,7 +100,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Недоспустимые символы")
         return value
 
-
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(
         read_only=True
@@ -137,4 +131,4 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = (
             'id', 'text', 'author', 'pub_date')
-        
+

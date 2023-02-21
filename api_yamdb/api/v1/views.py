@@ -56,8 +56,6 @@ class TitleViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('category', 'genre', 'name', 'year')
-    filterset_fields = ('category','genre','name','year')
-
 
     def get_serializer_class(self):
         if self.action in ("retrieve", "list"):
@@ -136,7 +134,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (
@@ -175,3 +172,4 @@ class CommentViewSet(viewsets.ModelViewSet):
             author=self.request.user,
             review=self.get_review()
         )
+
