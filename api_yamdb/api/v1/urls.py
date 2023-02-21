@@ -1,15 +1,10 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-
-from .views import (CategoryViewSet, GenreViewSet, create_user, Token,
-                    TitleViewSet,UserViewSet)
-
 from .views import (
     CategoryViewSet, CommentViewSet, GenreViewSet,
-    ReviewViewSet, TitleViewSet,
+    ReviewViewSet, TitleViewSet, UserViewSet,create_user,Token,
 )
-
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
@@ -31,4 +26,3 @@ router.register(
     CommentViewSet,
     basename='comments'
 )
-

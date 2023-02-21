@@ -2,6 +2,7 @@ import re
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
+
 from rest_framework import serializers
 
 from reviews.models import Category, Comment, Genre, Review, Title
