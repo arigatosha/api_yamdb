@@ -1,33 +1,26 @@
-<<<<<<< HEAD
 import re
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 User = get_user_model()
 
-from reviews.models import Category, Genre, Title, User
+from users.models import User
 
-
-class CategorySerializer(serializers.ModelSerializer):
-=======
 from rest_framework import serializers
 
 from reviews.models import Category, Comment, Genre, Review, Title
-from users.models import User
+
+User = get_user_model()
 
 class CategorySerializer(serializers.ModelSerializer):
 
->>>>>>> a2f03a73d36e01291e8e6dc2266d883199ed5fad
+
     class Meta:
         model = Category
         fields = ('name', 'slug')
 
 
 class GenreSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
-=======
 
->>>>>>> a2f03a73d36e01291e8e6dc2266d883199ed5fad
     class Meta:
         model = Genre
         fields = ('name', 'slug')
@@ -60,7 +53,7 @@ class OnlyReadTitleSerializer(serializers.ModelSerializer):
         )
 
 
-<<<<<<< HEAD
+
 class MyTokenObtainPairSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -110,8 +103,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Недоспустимые символы")
         return value
 
-
-=======
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(
         read_only=True
@@ -143,4 +134,4 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = (
             'id', 'text', 'author', 'pub_date')
->>>>>>> a2f03a73d36e01291e8e6dc2266d883199ed5fad
+
