@@ -8,3 +8,9 @@ class CreateListDestroyViewSet(
     viewsets.GenericViewSet,
 ):
     pass
+
+
+class CreateViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+
+    class Meta:
+        abstract = True
