@@ -12,13 +12,11 @@ class User(AbstractUser):
         (MODERATOR, 'moderator'),
         (USER, 'user'))
 
-    username = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    email = models.EmailField(verbose_name='email', unique=True)
-    role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES)
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(verbose_name='email',unique=True, max_length=254)
+    role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES, max_length=40)
     bio = models.TextField('Биография', blank=True, )
-    token = models.CharField(
-        blank=True,
-        null=True,
+    confirmation_code = models.CharField(
         max_length=150,
     )
     USERNAME_FIELD = 'email'
