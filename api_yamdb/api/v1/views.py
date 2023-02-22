@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 
 from rest_framework.permissions import AllowAny
 
-from .permissions import IsAdministrator
+from .permissions import IsAdministrator, IsAdminOrReadOnly, OwnerOrReadOnly
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from reviews.models import Category, Genre, Title, Review
@@ -19,10 +19,12 @@ from rest_framework import filters, viewsets, permissions
 from django.db.models import Avg
 from django_filters.rest_framework import DjangoFilterBackend
 from .mixins import CreateListDestroyViewSet
-from .permissions import IsAdminOrReadOnly
+# from .permissions import IsAdminOrReadOnly
 from .serializers import (
     CategorySerializer, GenreSerializer, TitleSerializer,
     ReviewSerializer, CommentSerializer, OnlyReadTitleSerializer, UserSerializer,RegisterSerializer,MyTokenObtainPairSerializer)
+from .filters import TitleFieldFilter
+
 
 User = get_user_model()
 
@@ -50,7 +52,7 @@ class TitleViewSet(viewsets.ModelViewSet):
     ).order_by("name")
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('category', 'genre', 'name', 'year')
+    filterset_class = TitleFieldFilter
 
     def get_serializer_class(self):
         if self.action in ("retrieve", "list"):
@@ -64,6 +66,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdministrator]
     http_method_names = ['get', 'post', 'patch', 'delete']
     filter_backends = [filters.SearchFilter]
+    search_fields = ("username",)
     lookup_field = 'username'
 
     @action(
@@ -93,8 +96,9 @@ class UserViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
-    )
+      OwnerOrReadOnly,
+   )
+
 
     def get_title(self):
         title_id = self.kwargs.get('title_id')
@@ -109,11 +113,11 @@ class ReviewViewSet(viewsets.ModelViewSet):
             title=self.get_title()
         )
 
-
+    
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
+        OwnerOrReadOnly,
     )
 
     def get_review(self):

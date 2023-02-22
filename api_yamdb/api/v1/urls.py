@@ -11,13 +11,6 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'genres', GenreViewSet)
 router.register(r'titles', TitleViewSet)
 router.register(r'users', UserViewSet, basename='user')
-
-urlpatterns = [
-    path('', include(router.urls)),
-    path('auth/signup/', create_user),
-    path('auth/token/', Token),
-    ]
-
 router.register(
     r'titles/(?P<title_id>\d+)/reviews', ReviewViewSet, basename='reviews'
 )
@@ -26,3 +19,9 @@ router.register(
     CommentViewSet,
     basename='comments'
 )
+
+urlpatterns = [
+    path('', include(router.urls)),
+    path('auth/signup/', create_user),
+    path('auth/token/', Token),
+    ]
