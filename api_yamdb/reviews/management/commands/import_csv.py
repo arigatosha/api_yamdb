@@ -3,34 +3,27 @@ import os
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
-
-from api_yamdb.settings import CSV_DIR
-from reviews.models import (
-    Category,
-    Comment,
-    Genre,
-    GenreTitle,
-    Review,
-    Title
-)
+from reviews import models
 from users.models import User
 
+from api_yamdb.settings import CSV_DIR
+
 CONT = {
-    'category': Category,
-    'genre': Genre,
-    'titles': Title,
-    'genre_title': GenreTitle,
+    'category': models.Category,
+    'genre': models.Genre,
+    'titles': models.Title,
+    'genre_title': models.GenreTitle,
     'users': User,
-    'review': Review,
-    'comments': Comment,
+    'review': models.Review,
+    'comments': models.Comment,
 }
 
 CONT1 = {
-    'category': ('category', Category),
-    'title_id': ('title', Title),
-    'genre_id': ('genre', Genre),
+    'category': ('category', models.Category),
+    'title_id': ('title', models.Title),
+    'genre_id': ('genre', models.Genre),
     'author': ('author', User),
-    'review_id': ('review', Review),
+    'review_id': ('review', models.Review),
 }
 
 

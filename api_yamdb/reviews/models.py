@@ -1,9 +1,5 @@
 from django.db import models
-from django.core.validators import (
-    MaxValueValidator,
-    MinValueValidator,
-)
-
+from django.core.validators import (MaxValueValidator, MinValueValidator)
 from users.models import User
 
 
@@ -86,7 +82,6 @@ class Title(models.Model):
         verbose_name = 'Произведение'
         verbose_name_plural = 'Произведения'
         ordering = ('-year', 'name')
-
 
 
 class GenreTitle(models.Model):

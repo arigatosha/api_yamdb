@@ -13,8 +13,11 @@ class User(AbstractUser):
         (USER, 'user'))
 
     username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(verbose_name='email',unique=True, max_length=254)
-    role = models.CharField('Роли пользователей', default=USER, choices=ROLE_CHOICES, max_length=40)
+    email = models.EmailField(verbose_name='email',
+                              unique=True,
+                              max_length=254)
+    role = models.CharField('Роли пользователей', default=USER,
+                            choices=ROLE_CHOICES, max_length=40)
     bio = models.TextField('Биография', blank=True, )
     confirmation_code = models.CharField(
         max_length=150,
