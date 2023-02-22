@@ -12,7 +12,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 from .filters import TitleFieldFilter
 from .mixins import CreateListDestroyViewSet
-from .permissions import IsAdminOrReadOnly
+from .permissions import IsAdminOrReadOnly, OwnerOrReadOnly
 from .serializers import (
     CategorySerializer, GenreSerializer, TitleSerializer,
     ReviewSerializer, CommentSerializer, OnlyReadTitleSerializer, UserSerializer,
