@@ -1,13 +1,12 @@
 import re
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-
-
 from rest_framework import serializers
-
 from reviews.models import Category, Comment, Genre, Review, Title
 
 User = get_user_model()
+
 
 class CategorySerializer(serializers.ModelSerializer):
 
@@ -73,7 +72,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         return value
 
 
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -86,18 +84,20 @@ class UserSerializer(serializers.ModelSerializer):
             'bio',
             'role'
         )
+
     def validate_username(self, value):
         if value == 'me':
             raise serializers.ValidationError(
                 {
                     'username':
-                        'Нельзя использовать имя me в качестве имени пользователя.'
+                        'Нельзя использовать me в качестве имени пользователя.'
                 }
             )
         match = re.fullmatch(r'^[\w.@+-]+', str(value))
         if match is None:
             raise serializers.ValidationError("Недоспустимые символы")
         return value
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(

@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from rest_framework.decorators import action
 from rest_framework_simplejwt.tokens import AccessToken
 from django.contrib.auth.tokens import default_token_generator
-from rest_framework import  status
+from rest_framework import status
 from rest_framework.permissions import (IsAuthenticated)
 
 from rest_framework.decorators import api_view, permission_classes
@@ -15,18 +15,19 @@ from .permissions import IsAdministrator, IsAdminOrReadOnly, OwnerOrReadOnly
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from reviews.models import Category, Genre, Title, Review
-from rest_framework import filters, viewsets, permissions
+from rest_framework import filters, viewsets
 from django.db.models import Avg
 from django_filters.rest_framework import DjangoFilterBackend
 from .mixins import CreateListDestroyViewSet
-# from .permissions import IsAdminOrReadOnly
 from .serializers import (
-    CategorySerializer, GenreSerializer, TitleSerializer,
-    ReviewSerializer, CommentSerializer, OnlyReadTitleSerializer, UserSerializer,RegisterSerializer,MyTokenObtainPairSerializer)
+    CategorySerializer, CommentSerializer, GenreSerializer, TitleSerializer,
+    ReviewSerializer, RegisterSerializer, MyTokenObtainPairSerializer,
+    OnlyReadTitleSerializer, UserSerializer,)
 from .filters import TitleFieldFilter
 
 
 User = get_user_model()
+
 
 class CategoryViewSet(CreateListDestroyViewSet):
     queryset = Category.objects.all()
@@ -95,10 +96,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = (
-      OwnerOrReadOnly,
-   )
-
+    permission_classes = (OwnerOrReadOnly,)
 
     def get_title(self):
         title_id = self.kwargs.get('title_id')
@@ -113,7 +111,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
             title=self.get_title()
         )
 
-    
+
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = (
@@ -139,7 +137,9 @@ class CommentViewSet(viewsets.ModelViewSet):
 def Token(request):
     serializer = MyTokenObtainPairSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        user = get_object_or_404(User, username=serializer.validated_data.get("username"))
+        user = get_object_or_404(
+            User, username=serializer.validated_data.get("username")
+        )
         access = AccessToken.for_user(user)
         return Response(f'token: {access}', status=status.HTTP_200_OK)
 
@@ -152,7 +152,9 @@ def create_user(request):
     serializer = RegisterSerializer(data=request.data)
     if User.objects.filter(username=request.data.get("username"),
                            email=request.data.get("email")).exists():
-        user, created = User.objects.get_or_create(username=request.data.get("username"))
+        user, created = User.objects.get_or_create(
+            username=request.data.get("username")
+        )
         if created is False:
             confirmation_code = default_token_generator.make_token(user)
             user.confirmation_code = confirmation_code
