@@ -12,7 +12,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 from .filters import TitleFieldFilter
 from .mixins import CreateListDestroyViewSet
-from .permissions import IsAdminOrReadOnly, OwnerOrReadOnly
+from .permissions import IsAdministrator, IsAdminOrReadOnly, OwnerOrReadOnly
 from .serializers import (
     CategorySerializer, GenreSerializer, TitleSerializer,
     ReviewSerializer, CommentSerializer, OnlyReadTitleSerializer, UserSerializer,
@@ -58,7 +58,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdministrator]
     http_method_names = ['get', 'post', 'patch', 'delete']
     filter_backends = [filters.SearchFilter]
     search_fields = ("username",)
