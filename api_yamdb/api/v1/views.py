@@ -1,29 +1,23 @@
-from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-
-from rest_framework.decorators import action
-from rest_framework_simplejwt.tokens import AccessToken
-from django.contrib.auth.tokens import default_token_generator
-from rest_framework import status
-from rest_framework.permissions import (IsAuthenticated)
-
-from rest_framework.decorators import api_view, permission_classes
-
-from rest_framework.permissions import AllowAny
-
-from .permissions import IsAdministrator, IsAdminOrReadOnly, OwnerOrReadOnly
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from reviews.models import Category, Genre, Title, Review
-from rest_framework import filters, viewsets
 from django.db.models import Avg
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 from django_filters.rest_framework import DjangoFilterBackend
-from .mixins import CreateListDestroyViewSet
-from .serializers import (
-    CategorySerializer, CommentSerializer, GenreSerializer, TitleSerializer,
-    ReviewSerializer, RegisterSerializer, MyTokenObtainPairSerializer,
-    OnlyReadTitleSerializer, UserSerializer,)
+from django.shortcuts import get_object_or_404
+from rest_framework import filters, permissions, viewsets, status
+from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.tokens import AccessToken
+
 from .filters import TitleFieldFilter
+from .mixins import CreateListDestroyViewSet
+from .permissions import IsAdminOrReadOnly
+from .serializers import (
+    CategorySerializer, GenreSerializer, TitleSerializer,
+    ReviewSerializer, CommentSerializer, OnlyReadTitleSerializer, UserSerializer,
+    RegisterSerializer, MyTokenObtainPairSerializer)
+from reviews.models import Category, Genre, Title, Review
 
 
 User = get_user_model()
@@ -64,7 +58,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdministrator]
+    permission_classes = [IsAdminOrReadOnly]
     http_method_names = ['get', 'post', 'patch', 'delete']
     filter_backends = [filters.SearchFilter]
     search_fields = ("username",)
