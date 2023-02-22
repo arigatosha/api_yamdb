@@ -19,9 +19,7 @@ from .serializers import (
     UserSerializer, RegisterSerializer, MyTokenObtainPairSerializer)
 from reviews.models import Category, Genre, Title, Review
 
-
 User = get_user_model()
-
 
 class CategoryViewSet(CreateListDestroyViewSet):
     queryset = Category.objects.all()
