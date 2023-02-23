@@ -6,7 +6,8 @@ from users.models import User
 class Category(models.Model):
     name = models.CharField(
         verbose_name='Название категории',
-        max_length=256
+        max_length=256,
+        db_index=True
     )
     slug = models.SlugField(
         verbose_name='Идентификатор категории',
