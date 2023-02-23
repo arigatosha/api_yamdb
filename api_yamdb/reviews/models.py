@@ -136,6 +136,7 @@ class Review(models.Model):
     )
 
     class Meta:
+        ordering = ['-pub_date']
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
         constraints = [
@@ -165,6 +166,7 @@ class Comment(models.Model):
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
 
     class Meta:
+        ordering = ['-pub_date']
         verbose_name = 'Комментарий к отзыву'
         verbose_name_plural = 'Комментарии к отзыву'
 
