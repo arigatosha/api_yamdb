@@ -11,6 +11,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 from reviews.models import Category, Genre, Review, Title
 
+from api_yamdb.settings import EMAIL
+
 from .filters import TitleFieldFilter
 from .mixins import CreateListDestroyViewSet
 from .permissions import IsAdministrator, IsAdminOrReadOnly, OwnerOrReadOnly
@@ -163,7 +165,7 @@ def create_user(request):
     send_mail(
         subject="Регистрация в проекте YaMDb",
         message=f"Ваш проверочный код: {confirmation_code}",
-        from_email="pahkarus@gmail.com",
+        from_email=EMAIL,
         recipient_list=[user.email],
     )
     return Response(serializer.data, status=status.HTTP_200_OK)

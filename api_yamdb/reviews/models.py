@@ -27,6 +27,7 @@ class Category(models.Model):
 class Genre(models.Model):
     name = models.CharField(
         verbose_name='Название жанра',
+        db_index=True,
         max_length=256
     )
     slug = models.SlugField(
@@ -49,7 +50,7 @@ class Title(models.Model):
         verbose_name='Название произведения',
         max_length=256
     )
-    year = models.IntegerField(
+    year = models.PositiveSmallIntegerField(
         verbose_name='Дата выхода произведения',
     )
     description = models.TextField(
@@ -70,7 +71,7 @@ class Title(models.Model):
         related_name='titles',
         null=True
     )
-    rating = models.IntegerField(
+    rating = models.PositiveSmallIntegerField(
         verbose_name='Рейтинг',
         null=True,
         default=None

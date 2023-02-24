@@ -127,3 +127,5 @@ SIMPLE_JWT = {
 }
 
 CSV_DIR = os.path.join(BASE_DIR, 'static/data')
+
+EMAIL = "pahkarus@gmail.com"

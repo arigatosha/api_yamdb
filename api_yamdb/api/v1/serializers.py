@@ -59,16 +59,16 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', "email",)
+        fields = ('username', 'email',)
 
     def validate_username(self, value):
         regex = re.compile(r'^[\w.@+-]+')
         if not regex.match(value):
-            raise serializers.ValidationError("Недоспустимые символы")
-        if value == "me":
-            raise ValidationError("Недоспустимое имя ")
+            raise serializers.ValidationError('Недоспустимые символы')
+        if value == 'me':
+            raise ValidationError('Недоспустимое имя ')
         elif User.objects.filter(username=value).exists():
-            raise ValidationError("Неверная авторизация")
+            raise ValidationError('Неверная авторизация')
         return value
 
 
@@ -95,7 +95,7 @@ class UserSerializer(serializers.ModelSerializer):
             )
         match = re.fullmatch(r'^[\w.@+-]+', str(value))
         if match is None:
-            raise serializers.ValidationError("Недоспустимые символы")
+            raise serializers.ValidationError('Недоспустимые символы')
         return value
 
 
