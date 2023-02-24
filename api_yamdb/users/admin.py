@@ -13,7 +13,7 @@ class UserAdmin(admin.ModelAdmin):
         'role',
     )
 
-    list_filter = ("username",)
+    list_filter = ('username',)
     search_fields = ('username',)
 
 
