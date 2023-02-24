@@ -29,8 +29,8 @@ class CategoryViewSet(CreateListDestroyViewSet):
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ("name",)
-    lookup_field = "slug"
+    search_fields = ('name',)
+    lookup_field = 'slug'
 
 
 class GenreViewSet(CreateListDestroyViewSet):
@@ -38,20 +38,20 @@ class GenreViewSet(CreateListDestroyViewSet):
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ("name",)
-    lookup_field = "slug"
+    search_fields = ('name',)
+    lookup_field = 'slug'
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all().annotate(
-        Avg("reviews__score")
-    ).order_by("name")
+        Avg('reviews__score')
+    ).order_by('name')
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_class = TitleFieldFilter
 
     def get_serializer_class(self):
-        if self.action in ("retrieve", "list"):
+        if self.action in ('retrieve', 'list'):
             return OnlyReadTitleSerializer
         return TitleSerializer
 
@@ -62,7 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdministrator]
     http_method_names = ['get', 'post', 'patch', 'delete']
     filter_backends = [filters.SearchFilter]
-    search_fields = ("username",)
+    search_fields = ('username',)
     lookup_field = 'username'
 
     @action(
@@ -145,10 +145,10 @@ def Token(request):
 @permission_classes([AllowAny])
 def create_user(request):
     serializer = RegisterSerializer(data=request.data)
-    if User.objects.filter(username=request.data.get("username"),
-                           email=request.data.get("email")).exists():
+    if User.objects.filter(username=request.data.get('username'),
+                           email=request.data.get('email')).exists():
         user, created = User.objects.get_or_create(
-            username=request.data.get("username")
+            username=request.data.get('username')
         )
         if created is False:
             confirmation_code = default_token_generator.make_token(user)
@@ -158,13 +158,13 @@ def create_user(request):
     serializer.is_valid(raise_exception=True)
     serializer.save()
 
-    user = User.objects.get(username=request.data["username"],
-                            email=request.data["email"])
+    user = User.objects.get(username=request.data['username'],
+                            email=request.data['email'])
     confirmation_code = default_token_generator.make_token(user)
     user.confirmation_code = confirmation_code
     send_mail(
-        subject="Регистрация в проекте YaMDb",
-        message=f"Ваш проверочный код: {confirmation_code}",
+        subject='Регистрация в проекте YaMDb',
+        message=f'Ваш проверочный код: {confirmation_code}',
         from_email=EMAIL,
         recipient_list=[user.email],
     )
